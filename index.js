@@ -15,7 +15,12 @@ authenticate(connection);
 
 //TODO: Chamar rotas (require) e (app.use())
 
+const rotasProfessores= require("./routes/professores");
+
+app.use(rotasProfessores);
+
+
 app.listen(3000, () => {
-    //connection.sync();
+    connection.sync();
     console.log("Servidor rodando em http://localhost:3000");
 });
