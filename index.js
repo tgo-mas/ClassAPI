@@ -8,6 +8,9 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 
+const { connection, authenticate } = require ("./database/database");
+authenticate(connection);
+
 //TODO: Chamar banco de dados { authenticate, connection }
 
 //TODO: Chamar rotas (require) e (app.use())
