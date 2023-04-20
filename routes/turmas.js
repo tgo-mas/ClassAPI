@@ -25,15 +25,19 @@ router.get("/turmas/:id", async (req,res) =>{
 });
 
 router.post("/turmas", async (req,res) =>{
-    const {serie, turno, professorId } = req.body;
+    const { serie, turno, professorId } = req.body;
 
     try {
         const professor = await Professor.findByPk(professorId);
         if(professor) {
-            const turma = await Turma.create ({ serie, turno, professorId })
+            const turma = await Turma.create (
+                { serie, turno, professorId },
+                { include: [Professor]}
+            );
+            res.json(turma);
         }
         else {
-            res.status(404).json({ message: "Turma não encontrada." })
+            res.status(404).json({ message: "Professor não encontrado." })
         }
     }
     catch (err) {
@@ -43,14 +47,14 @@ router.post("/turmas", async (req,res) =>{
 });
 
 router.put("/turmas/:id", async (req, res) =>{
-    const { serie, turno, professorId} = req.body;
+    const { serie, turno } = req.body;
     
     const turma = await Turma.findByPk(req.params.id);
 
     try {
         if(turma) {
             await Turma.update(
-                { serie, turno, professorId},
+                { serie, turno },
                 { where: { id: req.params.id } }
             );
             res.json({ message: "Turma editada." })

@@ -23,13 +23,21 @@ router.get("/alunos/:id", async (req, res) => {
 });
 
 router.post("/alunos", async (req, res) => {
-    const { nome, email, dataNasc, turma } = req.body;
+    const { nome, email, dataNasc, turmaId } = req.body;
 
     try {
-        const alunoNovo = await Aluno.create({ nome, email, dataNasc, turma },
-            { include: [Turma] }
-        )
-        res.status(201).json(alunoNovo);
+        const turma = Turma.findByPk(turmaId);
+
+        if(turma){
+            const alunoNovo = await Aluno.create(
+                { nome, email, dataNasc, turmaId },
+                { include: [Turma] }
+            );
+            
+            res.status(201).json(alunoNovo);
+        }else{
+            res.status(404).json("Turma não encontrada.");
+        }
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Um erro aconteceu" });
