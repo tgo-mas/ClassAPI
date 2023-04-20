@@ -9,6 +9,9 @@ const Turma = connection.define("turma", {
     turno: {
         type: DataTypes.STRING(10),
         allowNull: false,
+        validate: {
+            isIn: [['manhã', 'tarde', 'noite']] // valida se o valor está em uma lista de opções válidas -VALIDAÇÃO SEQUELIZE
+        }
     }
 })
 module.exports = Turma;
