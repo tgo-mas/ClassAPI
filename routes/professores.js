@@ -83,6 +83,9 @@ router.put("/professores/:id", async (req, res) => {
   }
 });
 
+
+
+
 // Excluir um professor
 router.delete("/professores/:id", async (req, res) => {
   
@@ -101,6 +104,7 @@ router.delete("/professores/:id", async (req, res) => {
     res.status(500).json({ message: "Um erro aconteceu." });
   }
 });
+
 
 
 

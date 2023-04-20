@@ -12,11 +12,17 @@ const Professor = connection.define("professor", {
             nome: { 
         type: DataTypes.STRING(130),
         allowNull: false, 
+        validate: {
+            len: [3, 130] // valida que o valor tem entre 3 e 130 caracteres - VALIDACAO SEQUELIZE
+        }
             },
             email: {
                 type: DataTypes.STRING(60),
                 allowNull: false,
-                unique:true
+                unique:true,
+                validate: {
+                    isEmail: true // valida se o valor é um email válido -VALIDAÇÃO SEQUELIZE
+                }
             },
             telefone: {
                 type: DataTypes.STRING(20),
