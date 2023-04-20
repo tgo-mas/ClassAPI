@@ -11,9 +11,13 @@ app.use(morgan("dev"));
 const { connection, authenticate } = require ("./database/database");
 authenticate(connection);
 
+//Definição de Rotas
+const rotasAlunos = require("./routes/alunos");
+
 //TODO: Chamar banco de dados { authenticate, connection }
 
 //TODO: Chamar rotas (require) e (app.use())
+app.use(rotasAlunos);
 
 const rotasProfessores= require("./routes/professores");
 
