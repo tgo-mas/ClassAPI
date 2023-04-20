@@ -6,8 +6,33 @@ const router = Router();
 
 
 router.get("/alunos", async (req, res) => {
+    const { nome, turma } = req.query;
+
     const listaAlunos = await Aluno.findAll();
-    res.json(listaAlunos);
+    let result = [];
+
+    if(nome && turma){
+        result = listaAlunos.filter(
+            value => value.nome.includes(nome) && Turma.findByPk(value.turmaId).serie.includes(turma)
+        );
+    }else if(nome){
+        result = listaAlunos.filter(
+            value => value.nome.includes(nome)
+        );
+    }else if(turma){
+        result = listaAlunos.filter(
+            value => value.turmaId === turma
+        );
+    }else{
+        res.json(listaAlunos);
+        return;
+    }
+
+    if(result !== []){
+        res.json(result);
+    }else{
+        res.status(404).json("Não foi encontrado aluno com os filtros selecionados.");
+    }
 });
 
 router.get("/alunos/:id", async (req, res) => {
