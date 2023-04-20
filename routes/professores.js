@@ -9,6 +9,21 @@ const router = Router();
 
 //Definição de Rotas
 
+/**
+ *  @swagger
+ *  /professores:
+ *   post:
+ *     summary: Cria um novo professor
+ *     description: Cria novo professor através do body
+ *     tags: [Professores] 
+ *     requestBody:
+ *     required: true
+ *     responses:
+ *       200:
+ *         description: Aluno criado
+ *       500:
+ *         description: Um erro aconteceu
+ */
 
 //Adicionar Professor--------------------------------
 
@@ -32,6 +47,19 @@ router.post("/professores", async (req, res) => {
 
 
 
+/**
+ *  @swagger
+ *  /professores:
+ *   get:
+ *     summary: Retorna uma lista de professores
+ *     description: Retorna uma lista de todos os professores cadastrados na base de dados.
+ *     tags: [Professores] 
+ *     responses:
+ *       200:
+ *         description: Retorna a lista de professores
+ *       500:
+ *         description: Erro interno no servidor
+ */
 // Listar Professores ------------------------------------
 router.get("/professores", async (req, res) => {
     // SELECT * FROM professores;
@@ -39,6 +67,19 @@ router.get("/professores", async (req, res) => {
     res.json(listaProfessores);
   });
 
+  /**
+ *  @swagger
+ *  /professores{id}:
+ *   get:
+ *     summary: Retorna o professor através do id
+ *     description: Retorna o professor por id através do params
+ *     tags: [Professores] 
+ *     responses:
+ *       200:
+ *         description: Retorna o professor solicitado
+ *       404:
+ *         description: Professor não encontrado
+ */
 
 // Professores por ID ---------------------------------
 router.get("/professores/:id", async (req, res) => {
@@ -55,7 +96,21 @@ router.get("/professores/:id", async (req, res) => {
   }
 });
 
-
+/**
+ *  @swagger
+ *  /professores{id}:
+ *   put:
+ *     summary: Atualiza professor pelo id
+ *     description: Retorna o professor atualizado pelo id.
+ *     tags: [Professores]
+ *     responses:
+ *       200:
+ *         description: Professor editado!
+ *       404:
+ *         description: Professor não encontrado
+ *       500:
+ *         description: Um erro aconteceu
+ */
 // atualizar um professor
 router.put("/professores/:id", async (req, res) => {
   // obter dados do corpo da requisão
@@ -83,6 +138,21 @@ router.put("/professores/:id", async (req, res) => {
   }
 });
 
+/**
+ *  @swagger
+ *  /professores{id}:
+ *   delete:
+ *     summary: Deleta um professor pelo id
+ *     description: Deleta professor pelo id
+ *     tags: [Professores]
+ *     responses:
+ *       200:
+ *         description: Professor removido
+ *       404:
+ *         description: Professor não encontrado
+ *       500:
+ *         description: Um erro aconteceu
+ */
 // Excluir um professor
 router.delete("/professores/:id", async (req, res) => {
   
