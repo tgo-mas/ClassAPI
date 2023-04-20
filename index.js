@@ -16,12 +16,15 @@ authenticate(connection);
 
 //Definição de Rotas
 const rotasAlunos = require("./routes/alunos");
+const rotasTurmas= require("./routes/turmas");
 
 
 //TODO: Chamar banco de dados { authenticate, connection }
 
 //TODO: Chamar rotas (require) e (app.use())
 app.use(rotasAlunos);
+
+app.use(rotasTurmas);
 
 const rotasProfessores= require("./routes/professores");
 
