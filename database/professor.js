@@ -10,11 +10,11 @@ const { connection } = require("./database.js")
 const Professor = connection.define("professor", {
 
             nome: { 
-        type: DataTypes.STRING(130),
-        allowNull: false, 
-        validate: {
-            len: [3, 130] // valida que o valor tem entre 3 e 130 caracteres - VALIDACAO SEQUELIZE
-        }
+                type: DataTypes.STRING(130),
+                allowNull: false, 
+                validate: {
+                    len: [3, 130] // valida que o valor tem entre 3 e 130 caracteres - VALIDACAO SEQUELIZE
+                }
             },
             email: {
                 type: DataTypes.STRING(60),
@@ -34,15 +34,12 @@ const Professor = connection.define("professor", {
             }
 });
 
-
 // Relacionamento de Dados
 // Professor:Turma (1:1)
 
 const Turma = require("./turma.js")
 
-Professor.hasOne(Turma);
+Professor.hasMany(Turma);
 Turma.belongsTo(Professor);
 
-
-
-module.exports= Professor;
+module.exports = Professor;

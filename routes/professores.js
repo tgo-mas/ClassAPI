@@ -14,13 +14,12 @@ const router = Router();
 
 router.post("/professores", async (req, res) => {
   // Coletar os dados do req.body
-  const { nome, email, telefone, areaDeEnsino, turma} = req.body;
+  const { nome, email, telefone, areaDeEnsino } = req.body;
 
   try {
     // Dentro de 'novo' estará o o objeto criado
     const novo = await Professor.create(
-      { nome, email, telefone, areaDeEnsino, turma},
-      { include: [Turma] }
+      { nome, email, telefone, areaDeEnsino }
     );
 
     res.status(201).json(novo);
@@ -30,15 +29,12 @@ router.post("/professores", async (req, res) => {
   }
 });
 
-
-
 // Listar Professores ------------------------------------
 router.get("/professores", async (req, res) => {
     // SELECT * FROM professores;
     const listaProfessores = await Professor.findAll();
     res.json(listaProfessores);
-  });
-
+});
 
 // Professores por ID ---------------------------------
 router.get("/professores/:id", async (req, res) => {
@@ -59,20 +55,17 @@ router.get("/professores/:id", async (req, res) => {
 // atualizar um professor
 router.put("/professores/:id", async (req, res) => {
   // obter dados do corpo da requisão
-  const {  nome, email, telefone, areaDeEnsino, turma } = req.body;
+  const {  nome, email, telefone, areaDeEnsino } = req.body;
   
   const { id } = req.params;
   try {
     
     const professor = await Professor.findOne({ where: { id } });
-    
+
     if (professor) {
       
-      if (turma) {
-        await Turma.update(turma, { where: { professorId: id } });
-      }
       // atualizar o professor 
-      await professor.update({ nome, email, telefone });
+      await professor.update({ nome, email, telefone, areaDeEnsino });
       res.status(200).json({ message: "Professor editado." });
     } else {
       res.status(404).json({ message: "Professor não encontrado." });

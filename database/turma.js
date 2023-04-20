@@ -14,4 +14,5 @@ const Turma = connection.define("turma", {
         }
     }
 })
+
 module.exports = Turma;
