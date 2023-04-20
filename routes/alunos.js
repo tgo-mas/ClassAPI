@@ -19,8 +19,33 @@ const router = Router();
  *         description: Erro interno no servidor
  */
 router.get("/alunos", async (req, res) => {
+    const { nome, turma } = req.query;
+
     const listaAlunos = await Aluno.findAll();
-    res.json(listaAlunos);
+    let result = [];
+
+    if(nome && turma){
+        result = listaAlunos.filter(
+            value => value.nome.includes(nome) && Turma.findByPk(value.turmaId).serie.includes(turma)
+        );
+    }else if(nome){
+        result = listaAlunos.filter(
+            value => value.nome.includes(nome)
+        );
+    }else if(turma){
+        result = listaAlunos.filter(
+            value => value.turmaId === turma
+        );
+    }else{
+        res.json(listaAlunos);
+        return;
+    }
+
+    if(result !== []){
+        res.json(result);
+    }else{
+        res.status(404).json("Não foi encontrado aluno com os filtros selecionados.");
+    }
 });
 
 /**
@@ -64,13 +89,21 @@ router.get("/alunos/:id", async (req, res) => {
  *         description: Um erro aconteceu
  */
 router.post("/alunos", async (req, res) => {
-    const { nome, email, dataNasc, turma } = req.body;
+    const { nome, email, dataNasc, turmaId } = req.body;
 
     try {
-        const alunoNovo = await Aluno.create({ nome, email, dataNasc, turma },
-            { include: [Turma] }
-        )
-        res.status(201).json(alunoNovo);
+        const turma = Turma.findByPk(turmaId);
+
+        if(turma){
+            const alunoNovo = await Aluno.create(
+                { nome, email, dataNasc, turmaId },
+                { include: [Turma] }
+            );
+            
+            res.status(201).json(alunoNovo);
+        }else{
+            res.status(404).json("Turma não encontrada.");
+        }
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Um erro aconteceu" });
