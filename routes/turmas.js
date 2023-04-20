@@ -8,8 +8,29 @@ const { Router } = require("express");
 const router = Router();
 
 router.get("/turmas", async (req, res) => {
+
+    const { serie, turno } = req.query;
     const listaTurmas = await Turma.findAll();
-    res.json(listaTurmas);
+    let result = [];
+
+    if(serie){
+        result = listaTurmas.filter(
+            value => value.serie.includes(serie)
+        );
+    }else if(turno){
+        result = listaTurmas.filter(
+            value => value.turno.includes(turno)
+        );
+    }else{
+        res.json(listaTurmas);
+        return;
+    }
+
+    if(result !== []){
+        res.json(result);
+    }else{
+        res.status(404).json("Não foram encontradas turmas com o filtro escolhido!");
+    }
 });
 
 router.get("/turmas/:id", async (req,res) =>{

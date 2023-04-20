@@ -31,9 +31,35 @@ router.post("/professores", async (req, res) => {
 
 // Listar Professores ------------------------------------
 router.get("/professores", async (req, res) => {
-    // SELECT * FROM professores;
+
+    const { nome, email, areaDeEnsino } = req.query;
     const listaProfessores = await Professor.findAll();
-    res.json(listaProfessores);
+    let result = [];
+
+    if(nome){
+      result = listaProfessores.filter(
+        value => value.nome.includes(nome)
+      );
+    }else if(email){
+      result = listaProfessores.filter(
+        value => value.email.includes(email)
+      );
+    }else if(areaDeEnsino){
+      result = listaProfessores.filter(
+        value => value.areaDeEnsino.includes(areaDeEnsino)
+      )
+    }else{
+      // SELECT * FROM professores;
+      res.json(listaProfessores);
+      return;
+    }
+
+    if(result !== []){
+      res.json(result);
+    }else{
+      res.status(404).json("Não foi encontrado professor com os filtros escolhidos!");
+    }
+
 });
 
 // Professores por ID ---------------------------------
