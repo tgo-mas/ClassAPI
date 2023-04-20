@@ -1,11 +1,9 @@
 const Professor = require("../database/professor");
 const Turma = require("../database/turma");
 
-
 const { Router } = require("express");
 
 const router = Router();
-
 
 //Definição de Rotas
 

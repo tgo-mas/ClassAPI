@@ -82,6 +82,10 @@ router.get("/alunos/:id", async (req, res) => {
  *     tags: [Alunos] 
  *     requestBody:
  *     required: true
+ *     content:
+ *      application/json:
+ *       schema:
+ *             $ref: '#/components/schemas/Aluno' 
  *     responses:
  *       200:
  *         description: Aluno criado
