@@ -14,7 +14,7 @@ const options = {
                 url: "https://spdx.org/licenses/MIT.html",
             },
             contact: {
-                name: "Squad 12",
+                name: "#Squad 12",
                 url: "https://github.com/tgo-mas/ClassAPI.git",
             },
         },
@@ -33,7 +33,10 @@ const options = {
         {
             name: "Professores",
             description:"Rotas de professores",
-
+        },
+        {
+            name: "Turmas",
+            description:"Rotas de turmas",
         }
     ],
     };
@@ -44,6 +47,6 @@ const options = {
         app.use(
             "/api-docs", 
             swaggerUi.serve, 
-            swaggerUi.setup(specs, { explorer: true})
+            swaggerUi.setup(specs, { explorer: true })
         );    
     } 
